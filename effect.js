@@ -172,23 +172,21 @@ $('document').ready(function(){
 		
 		var i;
 
-		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
-			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('slow').delay(1000);
-			if(i==50){
-				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
-					$('.cake').fadeIn('fast');
-				});
-				
-			}
-			else{
-				msgLoop(i);
-			}			
+function msgLoop(i) {
+    $("p:nth-child(" + i + ")").fadeOut('slow').delay(800).promise().done(function () {
+        i = i + 1;
+        $("p:nth-child(" + i + ")").fadeIn('slow').delay(1000);
+        if (i == $(".message p").length) { // When the last message disappears
+            $("p:nth-child(" + (i - 1) + ")").fadeOut('slow').promise().done(function () {
+                $('#birthdayVideo').fadeIn('slow');
+                $('#birthdayVideo')[0].play(); // Auto-play video
+            });
+        } else {
+            msgLoop(i);
+        }
+    });
+}
 
-		});
-			// body...
-		}
 		
 		msgLoop(0);
 		
